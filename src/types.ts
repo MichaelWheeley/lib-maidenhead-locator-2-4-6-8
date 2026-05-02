@@ -1,9 +1,9 @@
-export type LatLng = [number, number];
+export type LatLon = [number, number];
 export interface WGS84 {
   lat: number;
-  lng: number;
+  lon: number;
 }
-export type CoordinateLike = LatLng | WGS84;
-export type LatLngBounds = [LatLng, LatLng];
+export type CoordinateLike = LatLon | WGS84;
+export type LatLonBounds = [LatLon, LatLon];
 
 export type GridLocator = string;

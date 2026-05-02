@@ -22,22 +22,22 @@ import {
   maidenheadToBoundingBox,
   GridLocator,
   WGS84,
-  LatLng
+  LatLon
 } from '@hamset/maidenhead-locator';
 
 // convert maidenhead grid locator to WGS84 coordinate
 const grid_locator = 'DM06gs'
 const coordinate: WGS84 = maidenheadToWGS84(grid_locator);
-// output: { lat: 36.75, lng: -119.5 }
+// output: { lat: 36.75, lon: -119.5 }
 
 // convert WGS84 coordinate to maidenhead grid locator
-const coordinate: LatLng = { lat: 36.75, lng: -119.5 }
+const coordinate: LatLon = { lat: 36.75, lon: -119.5 }
 const grid_locator: GridLocator = WGS84ToMaidenhead(coordinate);
 // output: 'DM06gs'
 
 // get bounding box coordinates from maidenhead grid locator
 const grid_locator = 'DM06gs'
-const bounds: [LatLng, LatLng] = maidenheadToBoundingBox(grid_locator); 
+const bounds: [LatLon, LatLon] = maidenheadToBoundingBox(grid_locator); 
 // output: [ [ 36.75, -119.5 ], [ 36.791666666666664, -119.41666666666667 ] ]
 ```
 
@@ -68,17 +68,17 @@ declare const maidenheadToWGS84: (gridLocator: GridLocator) => WGS84;
  * @param gridLocator grid locator
  * @returns A two-dimensional array containing two diagonal coordinates of bounds
  */
-declare const maidenheadToBoundingBox: (gridLocator: GridLocator) => [LatLng, LatLng];
+declare const maidenheadToBoundingBox: (gridLocator: GridLocator) => [LatLon, LatLon];
 
 //
 // types
 //
-export type LatLng = [number, number];
+export type LatLon = [number, number];
 export interface WGS84 {
     lat: number;
-    lng: number;
+    lon: number;
 }
-export type CoordinateLike = LatLng | WGS84;
-export type LatLngBounds = [LatLng, LatLng];
+export type CoordinateLike = LatLon | WGS84;
+export type LatLonBounds = [LatLon, LatLon];
 export type GridLocator = string;
 ```

@@ -6,46 +6,46 @@ import {
   WGS84ToMaidenhead,
   maidenheadToWGS84,
   maidenheadToBoundingBox,
-  LatLng
+  LatLon
 } from '../src'
 
 describe('Maidenhead', () => {
   const cases = [
     {
       grid: 'DM06gs' as GridLocator,
-      latlng: [
+      latlon: [
         36.778261, 
         -119.4179324
-      ] as LatLng
+      ] as LatLon
     },
     {
       grid: 'OL39do' as GridLocator,
-      latlng: {
+      latlon: {
         lat: 29.617238,
-        lng: 106.324862
+        lon: 106.324862
       } as WGS84
     }
   ]
 
-  for (const { grid, latlng } of cases) {
+  for (const { grid, latlon } of cases) {
     it('should validate grid locator', () => {
       expect(validateGridLocator(grid)).toBe(true)
     })
 
     it('should convert WGS84 to Maidenhead', () => {
-      expect(WGS84ToMaidenhead(latlng)).toBe(grid)
+      expect(WGS84ToMaidenhead(latlon)).toBe(grid)
     })
 
     it('should convert Maidenhead to WGS84', () => {
       const result = maidenheadToWGS84(grid)
       
-      if (Array.isArray(latlng)) {
-        expect(result.lat).toBeCloseTo(latlng[0], 0)
-        expect(result.lng).toBeCloseTo(latlng[1], 0)
+      if (Array.isArray(latlon)) {
+        expect(result.lat).toBeCloseTo(latlon[0], 0)
+        expect(result.lon).toBeCloseTo(latlon[1], 0)
       }
-      if ('lat' in latlng && 'lng' in latlng) {
-        expect(result.lat).toBeCloseTo(latlng.lat, 0)
-        expect(result.lng).toBeCloseTo(latlng.lng, 0)
+      if ('lat' in latlon && 'lon' in latlon) {
+        expect(result.lat).toBeCloseTo(latlon.lat, 0)
+        expect(result.lon).toBeCloseTo(latlon.lon, 0)
       }
     })
 
