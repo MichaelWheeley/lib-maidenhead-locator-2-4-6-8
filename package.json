@@ -34,9 +34,9 @@
     "coverage": "vitest run --coverage"
   },
   "devDependencies": {
-    "bumpp": "^9.4.0",
+    "bumpp": "^11.0.1",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vitest": "^1.4.0"
+    "vite": "^8.0.10",
+    "vitest": "^4.1.5"
   }
 }
