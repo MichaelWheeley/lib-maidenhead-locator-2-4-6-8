@@ -1,7 +1,9 @@
 export {
   validateGridLocator,
+  maidenheadToLatLon,
   maidenheadToWGS84,
-  WGS84ToMaidenhead,
+  latLonToMaidenhead,
+  wgs84ToMaidenhead,
   maidenheadToBoundingBox,
 } from './maidenhead'
 
