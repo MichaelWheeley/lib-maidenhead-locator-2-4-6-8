@@ -1,29 +1,34 @@
-# @hamset/maidenhead-locator
+# @mr_uu/maidenhead-grid
 
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/HoshinoSuzumi/lib-maidenhead-locator/ci.yml)
-![NPM Downloads](https://img.shields.io/npm/dm/%40hamset%2Fmaidenhead-locator)
-![NPM Version (with dist tag)](https://img.shields.io/npm/v/%40hamset%2Fmaidenhead-locator/latest)
-![npm bundle size](https://img.shields.io/bundlephobia/min/%40hamset%2Fmaidenhead-locator)
+![NPM Version (with dist tag)](https://img.shields.io/npm/v/%40mr_uu%2Fmaidenhead-grid/latest)
 ![GitHub License](https://img.shields.io/github/license/HoshinoSuzumi/lib-maidenhead-locator)
+
+[link](https://github.com/MichaelWheeley/lib-maidenhead-locator-2-4-6-8)
 
 Maidenhead grid locator and WGS84 coordinate calculation and transformation
 
 ## Usage
 
 ```bash
-npm i @hamset/maidenhead-locator
+npm i @mr_uu/maidenhead-grid
 ```
 
-```typescript
+```js
 import {
   validateGridLocator,
-  WGS84ToMaidenhead,
+  maidenheadToLatLon,
   maidenheadToWGS84,
+  latLonToMaidenhead,
+  wgs84ToMaidenhead,
   maidenheadToBoundingBox,
-  GridLocator,
+  LatLon,
   WGS84,
-  LatLon
-} from '@hamset/maidenhead-locator';
+  CoordinateLike,
+  LatLonBounds,
+  GridLocator,
+} from '@mr_uu/maidenhead-grid';
+
+# needs editing:
 
 // convert maidenhead grid locator to WGS84 coordinate
 const grid_locator = 'DM06gs'
