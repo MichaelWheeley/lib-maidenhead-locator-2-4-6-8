@@ -1,16 +1,14 @@
 {
-  "name": "@hamset/maidenhead-locator",
+  "name": "maidenhead-grid-2-4-6-8",
   "type": "module",
-  "version": "0.2.1",
-  "description": "Maidenhead grid locator and WGS84 coordinate calculation and transformation",
+  "version": "0.0.1",
+  "description": "Maidenhead grid utilities",
   "keywords": [
-    "maidenhead-locator",
-    "wgs84",
-    "converter",
-    "ham-radio",
-    "amateur-radio"
+    "maidenhead grid",
+    "ham radio",
+    "amateur radio"
   ],
-  "author": "HoshinoSuzumi <master@uniiem.com>",
+  "author": "Michael R Wheeley <junkmail@teamv.com>",
   "license": "MIT",
   "packageManager": "yarn@1.22.22",
   "main": "dist/index.umd.cjs",
