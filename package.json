@@ -1,7 +1,7 @@
 {
   "name": "maidenhead-grid-2-4-6-8",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "description": "Maidenhead grid utilities",
   "keywords": [
     "maidenhead grid",
