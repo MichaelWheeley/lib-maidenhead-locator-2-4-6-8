@@ -2,7 +2,7 @@ import { CoordinateLike, GridLocator, LatLon, WGS84, BoundingBox, BoundingBoxLat
 
 // Code was forked from https://github.com/HoshinoSuzumi/lib-maidenhead-locator.
 // This code extends support for valid grid locators size 2, 4, (6), and 8 - all valid sizes in the Maidenhead standard.
-// The version also provides support for bounding box coordinates, that is the coordinates of the corners of the grid square which are useful for mapping applications.
+// The version also provides support for bounding box coordinates, - the coordinates of the corners of the grid square which are useful for mapping applications.
 
 const FIELD_LAT_DEG = 10;
 const FIELD_LON_DEG = 20;
