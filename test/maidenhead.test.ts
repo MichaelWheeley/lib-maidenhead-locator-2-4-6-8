@@ -52,7 +52,6 @@ describe("Maidenhead Grid tests", () => {
     latLonSWCornerGrid6,
     latLonNECornerGrid6,
   } of gridCases) {
-
     it("should validate test case grid locator has size 8", () => {
       expect(grid.length).toEqual(8);
     });
@@ -104,7 +103,9 @@ describe("Maidenhead Grid tests", () => {
 
     it("should convert Lat/Lon to Maidenhead Grid with default size 6 when no size is specified", () => {
       const result = latLonToMaidenhead(actualLatLon);
-      expect(result?.toUpperCase()).toBe(grid.substring(0, defaultSize).toUpperCase());
+      expect(result?.toUpperCase()).toBe(
+        grid.substring(0, defaultSize).toUpperCase(),
+      );
     });
 
     for (const size of sizes) {
@@ -194,8 +195,13 @@ describe("Maidenhead Grid tests", () => {
     }
 
     it(
-      "should convert Maidenhead Grid '" + grid.substring(0, defaultSize) + "' to bounding box coordinates", () => {
-        const result: BoundingBox | null = maidenheadToBoundingBox(grid.substring(0, defaultSize));
+      "should convert Maidenhead Grid '" +
+        grid.substring(0, defaultSize) +
+        "' to bounding box coordinates",
+      () => {
+        const result: BoundingBox | null = maidenheadToBoundingBox(
+          grid.substring(0, defaultSize),
+        );
         expect(result).not.toBeNull();
         expect(result!.sw.lat).toBeCloseTo(latLonSWCornerGrid6[0], 3);
         expect(result!.sw.lon).toBeCloseTo(latLonSWCornerGrid6[1], 3);
@@ -205,8 +211,13 @@ describe("Maidenhead Grid tests", () => {
     );
 
     it(
-      "should convert Maidenhead Grid '" + grid.substring(0, defaultSize) + "' to bounding box coordinates", () => {
-        const result: BoundingBoxLatLon | null = maidenheadToBoundingBoxLatLon(grid.substring(0, defaultSize));
+      "should convert Maidenhead Grid '" +
+        grid.substring(0, defaultSize) +
+        "' to bounding box coordinates",
+      () => {
+        const result: BoundingBoxLatLon | null = maidenheadToBoundingBoxLatLon(
+          grid.substring(0, defaultSize),
+        );
         expect(result).not.toBeNull();
         expect(result!.sw[0]).toBeCloseTo(latLonSWCornerGrid6[0], 3);
         expect(result!.sw[1]).toBeCloseTo(latLonSWCornerGrid6[1], 3);
@@ -217,11 +228,11 @@ describe("Maidenhead Grid tests", () => {
   }
 
   it("should gracefully attempt latLonToMaidenhead but reject lat/lon out of valid range", () => {
-    expect(latLonToMaidenhead([-91, 0])).toBeNull
-    expect(latLonToMaidenhead([91, 0])).toBeNull
-    expect(latLonToMaidenhead([0, -181])).toBeNull
-    expect(latLonToMaidenhead([0, 181])).toBeNull
-  })
+    expect(latLonToMaidenhead([-91, 0])).toBeNull;
+    expect(latLonToMaidenhead([91, 0])).toBeNull;
+    expect(latLonToMaidenhead([0, -181])).toBeNull;
+    expect(latLonToMaidenhead([0, 181])).toBeNull;
+  });
 
   it("should gracefully attempt maidenheadToBoundingBox with an invalid locator and detect a null returned", () => {
     expect(maidenheadToBoundingBox("invalid locator")).toBeNull;

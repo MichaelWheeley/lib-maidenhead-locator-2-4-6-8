@@ -26,14 +26,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Strictest (minus esModuleInterop)",
   "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "compiled",
-    "types",
-  ]
+  "exclude": ["node_modules", "compiled", "types"]
 }

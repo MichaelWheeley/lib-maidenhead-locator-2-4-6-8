@@ -373,6 +373,11 @@ postcss@^8.5.10:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
+prettier@^3.8.3:
+  version "3.8.3"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-3.8.3.tgz"
+  integrity sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==
+
 quansync@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/quansync/-/quansync-1.0.0.tgz"

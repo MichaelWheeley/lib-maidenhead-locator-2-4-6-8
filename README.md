@@ -5,15 +5,17 @@
 
 Maidenhead grid locator and WGS84 coordinate calculation and transformation. [(code)](https://github.com/MichaelWheeley/lib-maidenhead-locator-2-4-6-8).
 
-Forked from [@hamset/maidenhead-locator](https://github.com/HoshinoSuzumi/lib-maidenhead-locator). 
+Forked from [@hamset/maidenhead-locator](https://github.com/HoshinoSuzumi/lib-maidenhead-locator).
 Extends support for valid grid locators size 2, 4, (6), and 8, which are all valid sizes in the Maidenhead standard e.g. `DM`, `DM12`, `DM12KV`, `DM12KV99`. Also provides support for bounding box coordinates, that is, the coordinates of the corners of the grid square which are useful for mapping applications.
 
 ## install
+
 ```bash
 npm i @mr_uu/maidenhead-grid
 ```
 
 ## example
+
 ```js
 import {
   validateGridLocator,

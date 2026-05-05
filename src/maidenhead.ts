@@ -1,4 +1,11 @@
-import { CoordinateLike, GridLocator, LatLon, WGS84, BoundingBox, BoundingBoxLatLon } from "./types";
+import {
+  CoordinateLike,
+  GridLocator,
+  LatLon,
+  WGS84,
+  BoundingBox,
+  BoundingBoxLatLon,
+} from "./types";
 
 // Code was forked from https://github.com/HoshinoSuzumi/lib-maidenhead-locator.
 // This code extends support for valid grid locators size 2, 4, (6), and 8 - all valid sizes in the Maidenhead standard.
@@ -80,21 +87,24 @@ const latLonToMaidenhead = (
   coord: CoordinateLike,
   precision = 6,
 ): GridLocator | null => {
-
-  const {lat, lon} = Array.isArray(coord) ? { lat: coord[0]!, lon: coord[1]! } : coord;
+  const { lat, lon } = Array.isArray(coord)
+    ? { lat: coord[0]!, lon: coord[1]! }
+    : coord;
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
 
-  if (lat < -90 || lat > 90)
-    return null; // invalid latitude, it should be between -90 and 90
-  if (lon < -180 || lon > 180)
-    return null; // invalid longitude, it should be between -180 and 180
+  if (lat < -90 || lat > 90) return null; // invalid latitude, it should be between -90 and 90
+  if (lon < -180 || lon > 180) return null; // invalid longitude, it should be between -180 and 180
 
   const latNorm = lat + 90;
   const lonNorm = lon + 180;
 
   // Field (2 chars): 20° lon x 10° lat
-  const field1 = String.fromCharCode("A".charCodeAt(0) + Math.floor(lonNorm / FIELD_LON_DEG)); // A-R
-  const field2 = String.fromCharCode("A".charCodeAt(0) + Math.floor(latNorm / FIELD_LAT_DEG)); // A-R
+  const field1 = String.fromCharCode(
+    "A".charCodeAt(0) + Math.floor(lonNorm / FIELD_LON_DEG),
+  ); // A-R
+  const field2 = String.fromCharCode(
+    "A".charCodeAt(0) + Math.floor(latNorm / FIELD_LAT_DEG),
+  ); // A-R
 
   if (precision === 2) {
     return `${field1}${field2}`;
@@ -110,8 +120,14 @@ const latLonToMaidenhead = (
 
   // Subsquare (2 chars): 5' lon x 2.5' lat
   // note, although often these digits are written in small letters a-x the Maidenhead standard specifies them as all-CAPS A-X
-  const subsq1 = String.fromCharCode("A".charCodeAt(0) + Math.floor(((lonNorm % SQUARE_LON_DEG) * 60) / SUB_LON_MIN));
-  const subsq2 = String.fromCharCode("A".charCodeAt(0) + Math.floor(((latNorm % SQUARE_LAT_DEG) * 60) / SUB_LAT_MIN));
+  const subsq1 = String.fromCharCode(
+    "A".charCodeAt(0) +
+      Math.floor(((lonNorm % SQUARE_LON_DEG) * 60) / SUB_LON_MIN),
+  );
+  const subsq2 = String.fromCharCode(
+    "A".charCodeAt(0) +
+      Math.floor(((latNorm % SQUARE_LAT_DEG) * 60) / SUB_LAT_MIN),
+  );
 
   if (precision === 6) {
     return `${field1}${field2}${square1}${square2}${subsq1}${subsq2}`;
@@ -119,8 +135,12 @@ const latLonToMaidenhead = (
 
   if (precision === 8) {
     // Extended square (2 digits): 0.5' lon x 0.25' lat
-    const extSq1 = Math.floor((((lonNorm % SQUARE_LON_DEG) * 60) % SUB_LON_MIN) / EXT_LON_MIN);
-    const extSq2 = Math.floor((((latNorm % SQUARE_LAT_DEG) * 60) % SUB_LAT_MIN) / EXT_LAT_MIN);
+    const extSq1 = Math.floor(
+      (((lonNorm % SQUARE_LON_DEG) * 60) % SUB_LON_MIN) / EXT_LON_MIN,
+    );
+    const extSq2 = Math.floor(
+      (((latNorm % SQUARE_LAT_DEG) * 60) % SUB_LAT_MIN) / EXT_LAT_MIN,
+    );
 
     return `${field1}${field2}${square1}${square2}${subsq1}${subsq2}${extSq1}${extSq2}`;
   }
@@ -190,7 +210,7 @@ const maidenheadToBoundingBox = (grid: GridLocator): BoundingBox | null => {
     maxLon = minLon + EXT_LON_MIN / 60;
   }
 
-  return {sw: { lat: minLat, lon: minLon }, ne: { lat: maxLat, lon: maxLon }};
+  return { sw: { lat: minLat, lon: minLon }, ne: { lat: maxLat, lon: maxLon } };
 };
 
 /**
@@ -199,10 +219,14 @@ const maidenheadToBoundingBox = (grid: GridLocator): BoundingBox | null => {
  * @param {GridLocator} grid Maidenhead grid locator
  * @returns {(BoundingBoxLatLon | null)} a bounding box containing coordinates of SW and NE corners
  */
-const maidenheadToBoundingBoxLatLon = (grid: GridLocator): BoundingBoxLatLon | null => {
+const maidenheadToBoundingBoxLatLon = (
+  grid: GridLocator,
+): BoundingBoxLatLon | null => {
   const bbox = maidenheadToBoundingBox(grid);
-  return bbox ? { sw: [bbox.sw.lat, bbox.sw.lon], ne: [bbox.ne.lat, bbox.ne.lon] } : null;
-}
+  return bbox
+    ? { sw: [bbox.sw.lat, bbox.sw.lon], ne: [bbox.ne.lat, bbox.ne.lon] }
+    : null;
+};
 
 export {
   validateGridLocator,

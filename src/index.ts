@@ -6,6 +6,6 @@ export {
   wgs84ToMaidenhead,
   maidenheadToBoundingBox,
   maidenheadToBoundingBoxLatLon,
-} from './maidenhead'
-
-export * from './types'
+} from "./maidenhead";
+export { Grid, GridCompare } from "./grid";
+export * from "./types";
