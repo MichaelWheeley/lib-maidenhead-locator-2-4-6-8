@@ -8,7 +8,10 @@ import {
   maidenheadToLatLon,
   maidenheadToWGS84,
   maidenheadToBoundingBox,
+  maidenheadToBoundingBoxLatLon,
   LatLon,
+  BoundingBox,
+  BoundingBoxLatLon,
 } from "../src";
 
 describe("Maidenhead Grid tests", () => {
@@ -191,19 +194,24 @@ describe("Maidenhead Grid tests", () => {
     }
 
     it(
-      "should convert Maidenhead Grid '" +
-        grid.substring(0, defaultSize) +
-        "' to Lat/Lon bounding box coordinates",
-      () => {
-        const result = maidenheadToBoundingBox(grid.substring(0, defaultSize));
-        expect(result).toHaveLength(2);
-        expect(result?.[0]).toHaveLength(2);
-        expect(result?.[1]).toHaveLength(2);
+      "should convert Maidenhead Grid '" + grid.substring(0, defaultSize) + "' to bounding box coordinates", () => {
+        const result: BoundingBox | null = maidenheadToBoundingBox(grid.substring(0, defaultSize));
+        expect(result).not.toBeNull();
+        expect(result!.sw.lat).toBeCloseTo(latLonSWCornerGrid6[0], 3);
+        expect(result!.sw.lon).toBeCloseTo(latLonSWCornerGrid6[1], 3);
+        expect(result!.ne.lat).toBeCloseTo(latLonNECornerGrid6[0], 3);
+        expect(result!.ne.lon).toBeCloseTo(latLonNECornerGrid6[1], 3);
+      },
+    );
 
-        expect(result?.[0][0]).toBeCloseTo(latLonSWCornerGrid6[0], 3);
-        expect(result?.[0][1]).toBeCloseTo(latLonSWCornerGrid6[1], 3);
-        expect(result?.[1][0]).toBeCloseTo(latLonNECornerGrid6[0], 3);
-        expect(result?.[1][1]).toBeCloseTo(latLonNECornerGrid6[1], 3);
+    it(
+      "should convert Maidenhead Grid '" + grid.substring(0, defaultSize) + "' to bounding box coordinates", () => {
+        const result: BoundingBoxLatLon | null = maidenheadToBoundingBoxLatLon(grid.substring(0, defaultSize));
+        expect(result).not.toBeNull();
+        expect(result!.sw[0]).toBeCloseTo(latLonSWCornerGrid6[0], 3);
+        expect(result!.sw[1]).toBeCloseTo(latLonSWCornerGrid6[1], 3);
+        expect(result!.ne[0]).toBeCloseTo(latLonNECornerGrid6[0], 3);
+        expect(result!.ne[1]).toBeCloseTo(latLonNECornerGrid6[1], 3);
       },
     );
   }
