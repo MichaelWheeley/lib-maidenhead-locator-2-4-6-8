@@ -24,7 +24,6 @@ import {
   LatLon,
   WGS84,
   CoordinateLike,
-  LatLonBounds,
   GridLocator,
 } from '@mr_uu/maidenhead-grid';
 
@@ -84,6 +83,5 @@ export interface WGS84 {
     lon: number;
 }
 export type CoordinateLike = LatLon | WGS84;
-export type LatLonBounds = [LatLon, LatLon];
 export type GridLocator = string;
 ```
