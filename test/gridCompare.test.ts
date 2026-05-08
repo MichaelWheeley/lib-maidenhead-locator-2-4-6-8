@@ -6,7 +6,7 @@ describe("class GridCompare tests", () => {
     {
       originGridLocator: "DM12kv", // San Diego, California
       destinationGridLocator: "QF56od", // Sydney, Australia
-      distance_km: 12101.9,
+      range_km: 12101.9,
       bearing_deg: 241.3,
     },
   ];
@@ -14,7 +14,7 @@ describe("class GridCompare tests", () => {
   for (const {
     originGridLocator,
     destinationGridLocator,
-    distance_km,
+    range_km,
     bearing_deg,
   } of TestCases) {
     it("should compare two instances of the Grid class", () => {
@@ -23,7 +23,7 @@ describe("class GridCompare tests", () => {
       const comparison: GridCompare = origin.compareTo(destination);
 
       expect(comparison.isValid).toBe(true);
-      expect(comparison.distance_km).toBeCloseTo(distance_km, 1);
+      expect(comparison.range_km).toBeCloseTo(range_km, 1);
       expect(comparison.bearing_deg).toBeCloseTo(bearing_deg, 1);
     });
   }
@@ -34,7 +34,7 @@ describe("class GridCompare tests", () => {
     const comparison: GridCompare = origin.compareTo(destination);
 
     expect(comparison.isValid).toBe(false);
-    expect(comparison.distance_km).toBeNull;
+    expect(comparison.range_km).toBeNull;
     expect(comparison.bearing_deg).toBeNull;
   });
 });

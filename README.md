@@ -3,10 +3,13 @@
 ![NPM Version (with dist tag)](https://img.shields.io/npm/v/%40mr_uu%2Fmaidenhead-grid/latest)
 ![GitHub License](https://img.shields.io/github/license/HoshinoSuzumi/lib-maidenhead-locator)
 
-Maidenhead grid locator and WGS84 coordinate calculation and transformation. [(code)](https://github.com/MichaelWheeley/lib-maidenhead-locator-2-4-6-8).
+Maidenhead grid locator and WGS84 coordinate calculation and transformation. (for code see [here](https://github.com/MichaelWheeley/lib-maidenhead-locator-2-4-6-8)).
 
-Forked from [@hamset/maidenhead-locator](https://github.com/HoshinoSuzumi/lib-maidenhead-locator).
-Extends support for valid grid locators size 2, 4, (6), and 8, which are all valid sizes in the Maidenhead standard e.g. `DM`, `DM12`, `DM12KV`, `DM12KV99`. Also provides support for bounding box coordinates, that is, the coordinates of the corners of the grid square which are useful for mapping applications.
+- Forked from [@hamset/maidenhead-locator](https://github.com/HoshinoSuzumi/lib-maidenhead-locator).
+- Extends support for valid grid locators size 2, 4, (6), and 8, which are all valid sizes in the Maidenhead standard,
+  - e.g. `DM`, `DM12`, `DM12KV`, and `DM12KV99`.
+- Provides support for bounding box coordinates, that is, the corners of the grid square. These are useful for mapping applications.
+- Defines an optional Grid class that can be constructed using a grid locator or using coordinates, comparison of two instances of the Grid class reveals range and bearing between them.
 
 ## install
 
@@ -22,7 +25,6 @@ import {
   maidenheadToLatLon,
   maidenheadToWGS84,
   latLonToMaidenhead,
-  wgs84ToMaidenhead,
   maidenheadToBoundingBox,
   LatLon,
   WGS84,
@@ -42,7 +44,7 @@ coordinate = maidenheadToWGS84("DM12KV99"); // { lat: 32.9145, lon: -117.0875, }
 
 // Convert WGS84 coordinate to Maidenhead grid locator with default size 6
 let c: WGS84 = { lat: 32.8958, lon: -117.125 }
-const grid = wgs84ToMaidenhead(c); // "DM12KV"
+const grid = latLonToMaidenhead(c); // "DM12KV"
 
 // Get bounding-box coordinates from Maidenhead grid locator
 const bounds: BoundingBox | null = maidenheadToBoundingBox("DM12"); // { sw: { lat: 32, lon: -118, }, ne: { lat: 33, lon: -116, }, }
@@ -79,16 +81,6 @@ declare const maidenheadToWGS84 = (grid: GridLocator): WGS84 | null;
  * @returns {(LatLon | null)} Latitude and longitude coordinates
  */
 declare const maidenheadToLatLon = (grid: GridLocator): LatLon | null;
-
-/**
- * Convert latitude/longitude coordinates to Maidenhead grid locator of specified precision (character length)
- *
- * @param {CoordinateLike} coord latitude/longitude coordinates
- * @param {number} [precision=6] Precision (character length) of the grid locator returned, can be 2, 4, 6, or 8. (default if not specified is 6)
- * @returns {(GridLocator | null)} Maidenhead grid locator
- * @see maidenheadToLatLon
- */
-declare const wgs84ToMaidenhead = ( coord: CoordinateLike, precision = 6, ): GridLocator | null;
 
 /**
  * Convert latitude/longitude coordinates to Maidenhead grid locator of specified precision (character length)

@@ -24,3 +24,4 @@ coverage
 *.sln
 *.sw?
 package-lock.json
+src/*.d.ts

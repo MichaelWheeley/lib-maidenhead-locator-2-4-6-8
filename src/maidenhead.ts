@@ -21,12 +21,13 @@ const EXT_LAT_MIN = 0.25;
 const EXT_LON_MIN = 0.5;
 
 /**
- * Validate Maidenhead grid locator, can be 2, 4, 6, or 8 characters long.
- * e.g. DM, DM12, DM12KV, or DM12KV99 are all valid locators.
- * Although not specified in Maidenhead standard, compatibility provided with commonly used small-letters e.g. DM12kv validates true.
+ * Validate Maidenhead grid locator, can be 2, 4, 6, or 8 characters long,
+ * e.g. `DM`, `DM12`, `DM12KV`, or `DM12KV99` are all valid locators.
  *
+ * Although not specified in Maidenhead standard, compatibility provided with commonly used small-letters,
+ * e.g. `DM12kv` validates true.
  * @param {GridLocator} grid Maidenhead grid locator
- * @returns {boolean} true if the grid locator is valid, else false
+ * @returns {boolean} returns true if the grid locator is valid, else false.
  */
 const validateGridLocator = (grid: GridLocator): boolean => {
   if (typeof grid !== "string") return false;
@@ -37,10 +38,9 @@ const validateGridLocator = (grid: GridLocator): boolean => {
 };
 
 /**
- * Convert Maidenhead grid locator to latitude/longitude
- *
- * @param {GridLocator} grid Maidenhead grid locator
- * @returns {(WGS84 | null)} Latitude and longitude coordinates as WGS84
+ * Convert Maidenhead grid locator to latitude/longitude.
+ * @param {GridLocator} grid Maidenhead grid locator.
+ * @returns {(WGS84 | null)} returns latitude and longitude coordinates as WGS84.
  */
 const maidenheadToWGS84 = (grid: GridLocator): WGS84 | null => {
   const bbox = maidenheadToBoundingBox(grid);
@@ -51,10 +51,9 @@ const maidenheadToWGS84 = (grid: GridLocator): WGS84 | null => {
 };
 
 /**
- * Convert Maidenhead grid locator to latitude/longitude
- *
- * @param {GridLocator} grid Maidenhead grid locator
- * @returns {(LatLon | null)} Latitude and longitude coordinates
+ * Convert Maidenhead grid locator to latitude/longitude.
+ * @param {GridLocator} grid Maidenhead grid locator.
+ * @returns {(LatLon | null)} returns latitude and longitude coordinates.
  */
 const maidenheadToLatLon = (grid: GridLocator): LatLon | null => {
   const wgs84 = maidenheadToWGS84(grid);
@@ -62,9 +61,9 @@ const maidenheadToLatLon = (grid: GridLocator): LatLon | null => {
 };
 
 /**
- * Determines whether argument loc has type LatLon
- * @param {CoordinateLike} loc location argument
- * @returns a value indicating whether loc is a LatLon type
+ * Determines whether argument loc has type LatLon.
+ * @param {CoordinateLike} loc location argument.
+ * @returns returns a value indicating whether `loc` is a LatLon type.
  */
 const isLatLon = (loc: CoordinateLike): loc is LatLon => {
   return (
@@ -76,9 +75,9 @@ const isLatLon = (loc: CoordinateLike): loc is LatLon => {
 };
 
 /**
- * Determines whether argument loc has type WGS84
- * @param {CoordinateLike} loc location argument
- * @returns a value indicating whether loc is a WGS84 type
+ * Determines whether argument loc has type WGS84.
+ * @param {CoordinateLike} loc location argument.
+ * @returns returns a value indicating whether loc is a WGS84 type.
  */
 const isWGS84 = (x: CoordinateLike): x is WGS84 => {
   return (
@@ -91,11 +90,10 @@ const isWGS84 = (x: CoordinateLike): x is WGS84 => {
 };
 
 /**
- * Convert latitude/longitude coordinates to Maidenhead grid locator of specified precision (character length)
- *
- * @param {CoordinateLike} coord latitude/longitude coordinates
- * @param {number} [precision=6] Precision (character length) of the grid locator returned, can be 2, 4, 6, or 8. (default if not specified is 6)
- * @returns {(GridLocator | null)} Maidenhead grid locator
+ * Convert latitude/longitude coordinates to Maidenhead grid locator of specified precision (character length).
+ * @param {CoordinateLike} coord Lat/Long coordinates.
+ * @param {number} [precision=6] Precision (character length) of the grid locator returned, can be 2, 4, 6, or 8, (default if not specified is 6).
+ * @returns {(GridLocator | null)} returns Maidenhead grid locator.
  */
 const latLonToMaidenhead = (
   coord: CoordinateLike,
@@ -164,10 +162,9 @@ const latLonToMaidenhead = (
 };
 
 /**
- * Convert Maidenhead grid square to lat/lon bounding box coordinates, [SW, NE] corners
- *
- * @param {GridLocator} grid Maidenhead grid locator
- * @returns {(BoundingBox | null)} a bounding box containing coordinates of SW and NE corners
+ * Convert Maidenhead grid square to lat/lon bounding box coordinates, [SW, NE] corners.
+ * @param {GridLocator} grid Maidenhead grid locator.
+ * @returns {(BoundingBox | null)} returns a bounding box containing coordinates of SW and NE corners.
  */
 const maidenheadToBoundingBox = (grid: GridLocator): BoundingBox | null => {
   if (!grid || !validateGridLocator(grid)) return null;
@@ -229,10 +226,9 @@ const maidenheadToBoundingBox = (grid: GridLocator): BoundingBox | null => {
 };
 
 /**
- * Convert Maidenhead grid square to lat/lon bounding box coordinates, [SW, NE] corners
- *
- * @param {GridLocator} grid Maidenhead grid locator
- * @returns {(BoundingBoxLatLon | null)} a bounding box containing coordinates of SW and NE corners
+ * Convert Maidenhead grid square to lat/lon bounding box coordinates, [SW, NE] corners.
+ * @param {GridLocator} grid Maidenhead grid locator.
+ * @returns {(BoundingBoxLatLon | null)} a bounding box containing coordinates of SW and NE corners.
  */
 const maidenheadToBoundingBoxLatLon = (
   grid: GridLocator,
