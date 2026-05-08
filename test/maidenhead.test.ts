@@ -1,15 +1,14 @@
 import { describe, it, expect } from "vitest";
 import {
   GridLocator,
+  LatLon,
   WGS84,
   validateGridLocator,
   latLonToMaidenhead,
-  wgs84ToMaidenhead,
   maidenheadToLatLon,
   maidenheadToWGS84,
   maidenheadToBoundingBox,
   maidenheadToBoundingBoxLatLon,
-  LatLon,
   BoundingBox,
   BoundingBoxLatLon,
 } from "../src";
@@ -73,16 +72,6 @@ describe("Maidenhead Grid tests", () => {
         "should convert Lat/Lon to Maidenhead Grid of requested size " + size,
         () => {
           const result = latLonToMaidenhead(actualLatLon, size);
-          expect(result?.toUpperCase()).toBe(
-            grid.substring(0, size).toUpperCase(),
-          );
-        },
-      );
-
-      it(
-        "should convert WGS84 to Maidenhead Grid of requested size " + size,
-        () => {
-          const result = wgs84ToMaidenhead(actualLatLon, size);
           expect(result?.toUpperCase()).toBe(
             grid.substring(0, size).toUpperCase(),
           );

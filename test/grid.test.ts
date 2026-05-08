@@ -1,20 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  GridLocator,
-  WGS84,
-  validateGridLocator,
-  latLonToMaidenhead,
-  wgs84ToMaidenhead,
-  maidenheadToLatLon,
-  maidenheadToWGS84,
-  maidenheadToBoundingBox,
-  maidenheadToBoundingBoxLatLon,
-  LatLon,
-  BoundingBox,
-  BoundingBoxLatLon,
-  Grid,
-  GridCompare,
-} from "../src";
+import { Grid } from "../src";
 
 describe("class Grid tests", () => {
   const gridCases = [
@@ -28,7 +13,7 @@ describe("class Grid tests", () => {
   ];
 
   for (const { gridLocator, actualLatLon } of gridCases) {
-    const grid = new Grid(gridLocator);
+    const grid = new Grid(gridLocator); // instance of Grid from grid locator
 
     it("should validate instance of Grid object has isValid === true", () => {
       expect(grid.isValid).toBe(true);
@@ -44,6 +29,27 @@ describe("class Grid tests", () => {
       const location = grid.locationWGS84;
       expect(location!.lat).toBeCloseTo(actualLatLon.lat, 2);
       expect(location!.lon).toBeCloseTo(actualLatLon.lon, 2);
+    });
+
+    it("should create instance of Grid based on LatLon and confirm calculated grid locator agrees with expected", () => {
+      const gridLocatorSize = gridLocator.length;
+      const grid = new Grid(actualLatLon, gridLocatorSize);
+      expect(grid.gridLocator).toBe(gridLocator.toUpperCase());
+    });
+  }
+
+  for (const { gridLocator, actualLatLon } of gridCases) {
+    it("expect that instance of Grid built from coordinates and of specified grid locator size to be the same grid locator as specified in the test case", () => {
+      const grid = new Grid(actualLatLon, gridLocator.length); // instance of Grid from coordinates as type WGS84, with specified size
+      expect(grid.gridLocator).toBe(gridLocator.toUpperCase());
+    });
+
+    it("expect that instance of Grid built from coordinates and of specified grid locator size to be the same grid locator as specified in the test case", () => {
+      const grid = new Grid(
+        [actualLatLon.lat, actualLatLon.lon],
+        gridLocator.length,
+      ); // instance of Grid from coordinates as type LatLon, with specified size
+      expect(grid.gridLocator).toBe(gridLocator.toUpperCase());
     });
   }
 
@@ -63,5 +69,9 @@ describe("class Grid tests", () => {
     expect(grid.isValid).toBe(false);
     expect(grid.locationLatLon).toBeNull;
     expect(grid.locationWGS84).toBeNull;
+  });
+
+  it("should with invalid coordinates generate instance Grid but with isValid flag false", () => {
+    expect(new Grid([-999.0, 0]).isValid).toBe(false);
   });
 });

@@ -62,18 +62,32 @@ const maidenheadToLatLon = (grid: GridLocator): LatLon | null => {
 };
 
 /**
- * Convert latitude/longitude coordinates to Maidenhead grid locator of specified precision (character length)
- *
- * @param {CoordinateLike} coord latitude/longitude coordinates
- * @param {number} [precision=6] Precision (character length) of the grid locator returned, can be 2, 4, 6, or 8. (default if not specified is 6)
- * @returns {(GridLocator | null)} Maidenhead grid locator
- * @see maidenheadToLatLon
+ * Determines whether argument loc has type LatLon
+ * @param {CoordinateLike} loc location argument
+ * @returns a value indicating whether loc is a LatLon type
  */
-const wgs84ToMaidenhead = (
-  coord: CoordinateLike,
-  precision = 6,
-): GridLocator | null => {
-  return latLonToMaidenhead(coord, precision);
+const isLatLon = (loc: CoordinateLike): loc is LatLon => {
+  return (
+    Array.isArray(loc) &&
+    loc.length === 2 &&
+    typeof loc[0] === "number" &&
+    typeof loc[1] === "number"
+  );
+};
+
+/**
+ * Determines whether argument loc has type WGS84
+ * @param {CoordinateLike} loc location argument
+ * @returns a value indicating whether loc is a WGS84 type
+ */
+const isWGS84 = (x: CoordinateLike): x is WGS84 => {
+  return (
+    !Array.isArray(x) &&
+    typeof x === "object" &&
+    x !== null &&
+    typeof (x as any).lat === "number" &&
+    typeof (x as any).lon === "number"
+  );
 };
 
 /**
@@ -87,9 +101,10 @@ const latLonToMaidenhead = (
   coord: CoordinateLike,
   precision = 6,
 ): GridLocator | null => {
-  const { lat, lon } = Array.isArray(coord)
-    ? { lat: coord[0]!, lon: coord[1]! }
-    : coord;
+  const { lat, lon } = isWGS84(coord)
+    ? coord
+    : { lat: coord[0], lon: coord[1] };
+
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
 
   if (lat < -90 || lat > 90) return null; // invalid latitude, it should be between -90 and 90
@@ -233,7 +248,8 @@ export {
   maidenheadToLatLon,
   maidenheadToWGS84,
   latLonToMaidenhead,
-  wgs84ToMaidenhead,
   maidenheadToBoundingBox,
   maidenheadToBoundingBoxLatLon,
+  isLatLon,
+  isWGS84,
 };

@@ -1,18 +1,35 @@
 import { GridCompare } from "./gridCompare";
 import {
+  latLonToMaidenhead,
   maidenheadToLatLon,
   maidenheadToWGS84,
   validateGridLocator,
+  isLatLon,
+  isWGS84,
 } from "./maidenhead";
-import { GridLocator, LatLon, WGS84 } from "./types";
+import { CoordinateLike, GridLocator, LatLon, WGS84 } from "./types";
 
 class Grid {
-  private gridLocator: GridLocator;
-  private gridLocatorSize: number;
+  readonly gridLocator: GridLocator;
 
-  constructor(grid: GridLocator) {
-    this.gridLocator = grid;
-    this.gridLocatorSize = this.isValid ? grid.length : 0;
+  private isGridLocator(x: GridLocator | CoordinateLike): x is GridLocator {
+    return typeof x === "string";
+  }
+
+  constructor(
+    location: GridLocator | CoordinateLike,
+    gridLocatorSize: number = 6,
+  ) {
+    if (this.isGridLocator(location)) {
+      this.gridLocator = location;
+    } else if (isLatLon(location) || isWGS84(location)) {
+      const locator = latLonToMaidenhead(location, gridLocatorSize);
+      this.gridLocator = locator === null ? "" : locator;
+    } else {
+      throw new Error(
+        "Invalid location: expected GridLocator string or CoordinateLike value",
+      );
+    }
   }
 
   get isValid(): boolean {
@@ -33,10 +50,7 @@ class Grid {
 
   isEqual(other: any): boolean {
     if (other instanceof Grid && this.isValid && other.isValid) {
-      return (
-        this.gridLocatorSize === other.gridLocatorSize &&
-        this.gridLocator === other.gridLocator
-      );
+      return this.gridLocator === other.gridLocator;
     }
     return false; // Different types or unsupported comparison
   }
