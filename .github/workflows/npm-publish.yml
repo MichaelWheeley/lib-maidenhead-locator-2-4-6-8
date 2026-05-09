@@ -1,37 +1,35 @@
 name: Publish NPM Package
+# works on main branch only, triggers on version tag push
 
 on:
-  workflow_dispatch:
-  workflow_run:
-    workflows: [Release]
-    types:
-      - completed
-  release:
-    types: [released]
+  push:
+    branches: [main]
+    tags:
+      - 'v*.*.*'   # triggers only when version tags are pushed
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+      - run: npm ci
       - run: npm run build
-      - run: npm run test
+      - run: npm test
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-      - run: npm install
+      - run: npm ci
       - run: npm run build
-      - run: npm publish --access=public
+      - run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
