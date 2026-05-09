@@ -67,7 +67,7 @@ class Grid {
   /**
    * The coordinates of the grid locator in WGS84 format.
    * @readonly
-   * @type {(LatLon | null)}
+   * @type {(WGS84 | null)}
    */
   get locationWGS84(): WGS84 | null {
     return this.isValid ? maidenheadToWGS84(this.gridLocator) : null;

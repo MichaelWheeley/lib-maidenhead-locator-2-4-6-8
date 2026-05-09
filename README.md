@@ -10,7 +10,7 @@ Maidenhead grid locator and WGS84 coordinate calculation and transformation. (fo
   - e.g. `DM`, `DM12`, `DM12KV`, and `DM12KV99`.
 - Provides support for bounding box coordinates, the corners of the grid square. These corners are useful for mapping applications.
 - Defines an optional `Grid` class that is an alternate way of working. An instance of the class represents a grid location and can be constructed by grid locator or by using coordinates.
-  - Once instantiated a single refernce can be used within code and the `isValid`, grid locator and coordinates are all available as properties.
+  - Once instantiated a single reference can be used within code and the `isValid`, grid locator and coordinates are all available as properties.
   - Additionally comparison of two instances using `compareTo()` reveals range and bearing between them, see example below.
 
 ## install
@@ -22,7 +22,6 @@ npm i @mr_uu/maidenhead-grid
 ## example
 
 ```js
-import assert from "assert";
 import {
   validateGridLocator,
   maidenheadToLatLon,
@@ -169,7 +168,7 @@ declare class Grid {
   /**
    * The coordinates of the grid locator in WGS84 format.
    * @readonly
-   * @type {(LatLon | null)}
+   * @type {(WGS84 | null)}
    */
   get locationWGS84(): WGS84 | null;
 
