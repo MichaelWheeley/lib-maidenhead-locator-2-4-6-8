@@ -3,11 +3,34 @@ name: Publish NPM Package
 on:
   push:
     branches: [main]
-    tags:
-      - 'v*.*.*'   # triggers only when version tags are pushed
+    paths:
+      - "package.json"   # only run when package.json changes
 
 jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version_changed: ${{ steps.check.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: check
+        run: |
+          NEW_VERSION=$(jq -r '.version' package.json)
+          OLD_VERSION=$(git show HEAD~1:package.json | jq -r '.version')
+
+          echo "Old version: $OLD_VERSION"
+          echo "New version: $NEW_VERSION"
+
+          if [ "$NEW_VERSION" != "$OLD_VERSION" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
   build:
+    needs: check-version
+    if: needs.check-version.outputs.version_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +50,6 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org/
-      - run: npm install
       - run: npm ci
       - run: npm run build
       - run: npm publish --access public
