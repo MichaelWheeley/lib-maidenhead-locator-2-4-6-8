@@ -1,7 +1,7 @@
 {
   "name": "@mr_uu/maidenhead-grid",
   "type": "module",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Maidenhead grid utilities supporting grids sizes 2, 4, 6, and 8.",
   "keywords": [
     "maidenhead grid",
@@ -10,7 +10,6 @@
   ],
   "author": "Michael R Wheeley <junkmail@teamv.com>",
   "license": "MIT",
-  "packageManager": "yarn@1.22.22",
   "main": "dist/index.umd.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
