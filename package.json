@@ -27,7 +27,9 @@
     "build": "vite build && tsc",
     "release": "bumpp",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "format": "npx prettier --write .",
+    "format:check": "npx prettier --check ."
   },
   "devDependencies": {
     "bumpp": "^11.0.1",

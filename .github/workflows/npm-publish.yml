@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "package.json"   # only run when package.json changes
+      - "package.json" # only run when package.json changes
 
 jobs:
   check-version:
@@ -38,6 +38,7 @@ jobs:
         with:
           node-version: 24
       - run: npm ci
+      - run: npm run format:check
       - run: npm run build
       - run: npm test
 
