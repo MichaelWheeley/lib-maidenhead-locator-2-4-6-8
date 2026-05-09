@@ -1,7 +1,7 @@
 {
   "name": "@mr_uu/maidenhead-grid",
   "type": "module",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Maidenhead grid utilities supporting grids sizes 2, 4, 6, and 8.",
   "keywords": [
     "maidenhead grid",
