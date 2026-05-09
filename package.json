@@ -1,7 +1,7 @@
 {
   "name": "@mr_uu/maidenhead-grid",
   "type": "module",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Maidenhead grid utilities supporting grids sizes 2, 4, 6, and 8.",
   "keywords": [
     "maidenhead grid",
@@ -27,7 +27,6 @@
     "build": "vite build && tsc",
     "release": "bumpp && npm publish",
     "test": "vitest",
-    "bench": "vitest bench",
     "coverage": "vitest run --coverage"
   },
   "devDependencies": {
