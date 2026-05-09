@@ -6,5 +6,6 @@ export {
   maidenheadToBoundingBox,
   maidenheadToBoundingBoxLatLon,
 } from "./maidenhead";
-export { Grid, GridCompare } from "./grid";
+export { Grid } from "./grid";
+export { GridCompare } from "./gridCompare";
 export * from "./types";

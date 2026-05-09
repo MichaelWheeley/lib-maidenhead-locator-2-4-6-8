@@ -2,11 +2,10 @@ import { Grid } from "./grid";
 
 /**
  * A comparison of two instances of the Grid class, returned by Grid.compareTo()
- * @export
  * @class GridCompare
  * @typedef {GridCompare}
  */
-export class GridCompare {
+class GridCompare {
   /**
    * A value indicating the distance [km] between the origin and destination instances of the Grid class.
    * @readonly
@@ -99,3 +98,5 @@ export class GridCompare {
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   };
 }
+
+export { GridCompare };

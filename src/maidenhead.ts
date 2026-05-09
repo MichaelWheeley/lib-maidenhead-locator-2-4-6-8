@@ -1,6 +1,6 @@
 import {
-  CoordinateLike,
   GridLocator,
+  CoordinateLike,
   LatLon,
   WGS84,
   BoundingBox,

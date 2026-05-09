@@ -1,4 +1,3 @@
-import { GridCompare } from "./gridCompare";
 import {
   latLonToMaidenhead,
   maidenheadToLatLon,
@@ -8,20 +7,19 @@ import {
   isWGS84,
 } from "./maidenhead";
 import { CoordinateLike, GridLocator, LatLon, WGS84 } from "./types";
+import { GridCompare } from "./gridCompare";
 
 /**
  * Grid class representing a grid location that can be constructed using an existing Maidenhead grid locator,
  * or by using a coordinate in LatLon or WGS84 format.
  * @class Grid
  * @typedef {Grid}
- * @see gridCompare see also grid comparison class for range and bearing comparison.
  */
 class Grid {
   /**
    * The Maidenhead grid locator for the instance of the class.
    * @readonly
    * @type {GridLocator}
-   * @see isValid
    */
   readonly gridLocator: GridLocator;
 
@@ -103,4 +101,4 @@ class Grid {
   }
 }
 
-export { Grid, GridCompare };
+export { Grid };
