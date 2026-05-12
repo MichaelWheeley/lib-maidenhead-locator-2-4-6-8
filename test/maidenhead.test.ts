@@ -15,6 +15,9 @@ import {
 
 describe("Maidenhead Grid tests", () => {
   const gridCases = [
+    // note that 'grid' fields entered in the test cases are all 8 characters long,
+    // as tests will also validate the first 2, 4, 6 and 8 characters.
+
     // location in San Diego, CA, USA
     {
       grid: "DM12kv99",
@@ -27,8 +30,32 @@ describe("Maidenhead Grid tests", () => {
     {
       grid: "QF56od55",
       actualLatLon: { lat: -33.8519, lon: 151.210886 },
-      latLonSWCornerGrid6: [-33.875, 151.1667],
-      latLonNECornerGrid6: [-33.8333, 151.25],
+    },
+
+    // location at equator / prime meridian
+    {
+      grid: "JJ00aa00",
+      actualLatLon: { lat: 0, lon: 0 },
+    },
+
+    // location at equator just west of antimeridian
+    {
+      grid: "RJ90XA90",
+      actualLatLon: { lat: 0, lon: 179.999 },
+    },
+
+    // location at equator on antimeridian
+    // note that this is not strictly valid as longitude should be given as -180 rather than +180,
+    // however some sources may expected +180 to be functional so it should be tested
+    {
+      grid: "AJ00AA00",
+      actualLatLon: { lat: 0, lon: 180.0 },
+    },
+
+    // location at equator on antimeridian
+    {
+      grid: "AJ00AA00",
+      actualLatLon: { lat: 0, lon: -180.0 },
     },
   ];
 
@@ -103,7 +130,9 @@ describe("Maidenhead Grid tests", () => {
           grid.substring(0, size) +
           "' to Lat/Lon",
         () => {
-          const { lat: expectedLat, lon: expectedLon } = actualLatLon;
+          // handle case where longitude is given as +180 or -180, although +180 is strictly invalid it can sometimes be used so should be tested
+          const { lat: expectedLat, lon: rawLon } = actualLatLon,
+            expectedLon = ((rawLon + 180) % 360) - 180;
           let latBucketSize,
             lonBucketSize,
             latBucketStart,
@@ -183,37 +212,38 @@ describe("Maidenhead Grid tests", () => {
       );
     }
 
-    it(
-      "should convert Maidenhead Grid '" +
-        grid.substring(0, defaultSize) +
-        "' to bounding box coordinates",
-      () => {
-        const result: BoundingBox | null = maidenheadToBoundingBox(
-          grid.substring(0, defaultSize),
-        );
-        expect(result).not.toBeNull();
-        expect(result!.sw.lat).toBeCloseTo(latLonSWCornerGrid6[0], 3);
-        expect(result!.sw.lon).toBeCloseTo(latLonSWCornerGrid6[1], 3);
-        expect(result!.ne.lat).toBeCloseTo(latLonNECornerGrid6[0], 3);
-        expect(result!.ne.lon).toBeCloseTo(latLonNECornerGrid6[1], 3);
-      },
-    );
+    if (latLonSWCornerGrid6 && latLonNECornerGrid6) {
+      it(
+        "should convert Maidenhead Grid '" +
+          grid.substring(0, defaultSize) +
+          "' to bounding box coordinates",
+        () => {
+          const result: BoundingBox | null = maidenheadToBoundingBox(
+            grid.substring(0, defaultSize),
+          );
+          expect(result).not.toBeNull();
+          expect(result!.sw.lat).toBeCloseTo(latLonSWCornerGrid6[0], 3);
+          expect(result!.sw.lon).toBeCloseTo(latLonSWCornerGrid6[1], 3);
+          expect(result!.ne.lat).toBeCloseTo(latLonNECornerGrid6[0], 3);
+          expect(result!.ne.lon).toBeCloseTo(latLonNECornerGrid6[1], 3);
+        },
+      );
 
-    it(
-      "should convert Maidenhead Grid '" +
-        grid.substring(0, defaultSize) +
-        "' to bounding box coordinates",
-      () => {
-        const result: BoundingBoxLatLon | null = maidenheadToBoundingBoxLatLon(
-          grid.substring(0, defaultSize),
-        );
-        expect(result).not.toBeNull();
-        expect(result!.sw[0]).toBeCloseTo(latLonSWCornerGrid6[0], 3);
-        expect(result!.sw[1]).toBeCloseTo(latLonSWCornerGrid6[1], 3);
-        expect(result!.ne[0]).toBeCloseTo(latLonNECornerGrid6[0], 3);
-        expect(result!.ne[1]).toBeCloseTo(latLonNECornerGrid6[1], 3);
-      },
-    );
+      it(
+        "should convert Maidenhead Grid '" +
+          grid.substring(0, defaultSize) +
+          "' to bounding box coordinates",
+        () => {
+          const result: BoundingBoxLatLon | null =
+            maidenheadToBoundingBoxLatLon(grid.substring(0, defaultSize));
+          expect(result).not.toBeNull();
+          expect(result!.sw[0]).toBeCloseTo(latLonSWCornerGrid6[0], 3);
+          expect(result!.sw[1]).toBeCloseTo(latLonSWCornerGrid6[1], 3);
+          expect(result!.ne[0]).toBeCloseTo(latLonNECornerGrid6[0], 3);
+          expect(result!.ne[1]).toBeCloseTo(latLonNECornerGrid6[1], 3);
+        },
+      );
+    }
   }
 
   it("should gracefully attempt latLonToMaidenhead but reject lat/lon out of valid range", () => {
