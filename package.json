@@ -32,12 +32,11 @@
     "format:check": "npx prettier --check ."
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.5",
     "bumpp": "^11.0.1",
     "prettier": "^3.8.3",
     "typescript": "^5.2.2",
     "vite": "^8.0.10",
-    "vitest": "^4.1.5",
-    "@vitest/coverage-v8": "^4.1.5"
-  },
-  "dependencies": {}
+    "vitest": "^4.1.5"
+  }
 }
